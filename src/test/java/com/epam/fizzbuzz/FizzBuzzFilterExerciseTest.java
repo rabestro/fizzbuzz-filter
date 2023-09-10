@@ -66,7 +66,7 @@ class FizzBuzzFilterExerciseTest {
         var numbers = IntStream.rangeClosed(1, 20);
 
         // TODO: Define the predicate
-        IntPredicate fizzBuzz = null;
+        IntPredicate fizzBuzz = i -> false;
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers between numbers divisible by three and by five")
