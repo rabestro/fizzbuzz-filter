@@ -12,6 +12,19 @@ class FizzBuzzFilterExerciseTest {
     private final IntPredicate fizz = i -> i % 3 == 0;
     private final IntPredicate buzz = i -> i % 5 == 0;
 
+
+    @Test
+    @DisplayName("Filter out numbers that are divisible by three and five.")
+    void numbers_divisible_by_three_and_five() {
+        var numbers = IntStream.rangeClosed(1, 20);
+
+        IntPredicate fizzBuzz = fizz.and(buzz);
+
+        assertThat(numbers.filter(fizzBuzz))
+                .as("Numbers divisible by three and five")
+                .containsExactly(15);
+    }
+
     @Test
     @DisplayName("Filter out numbers that are divisible by three or five.")
     void numbers_divisible_by_three_or_five() {
@@ -34,18 +47,6 @@ class FizzBuzzFilterExerciseTest {
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers not divisible by three or five")
                 .containsExactly(1, 2, 4, 7, 8, 11, 13, 14, 16, 17, 19);
-    }
-
-    @Test
-    @DisplayName("Filter out numbers that are divisible by three and five.")
-    void numbers_divisible_by_three_and_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
-
-        IntPredicate fizzBuzz = fizz.and(buzz);
-
-        assertThat(numbers.filter(fizzBuzz))
-                .as("Numbers divisible by three and five")
-                .containsExactly(15);
     }
 
     @Test
