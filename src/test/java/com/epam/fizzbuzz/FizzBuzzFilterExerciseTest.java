@@ -94,12 +94,11 @@ class FizzBuzzFilterExerciseTest {
         Predicate<String> buzz = "```"::equals;
 
         // TODO: Define the predicate
-        Predicate<String> fizzBuzz = i -> false;
+        Predicate<String> fizzBuzz = s -> false;
 
         assertThat(markdown.lines().filter(fizzBuzz))
                 .as("Java code snippets")
                 .containsExactly("""
-                        System.out.println("Hello, World!");
-                        """);
+                        System.out.println("Hello, World!");""");
     }
 }
