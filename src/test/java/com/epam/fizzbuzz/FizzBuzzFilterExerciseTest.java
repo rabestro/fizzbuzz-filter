@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,5 +73,33 @@ class FizzBuzzFilterExerciseTest {
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers between numbers divisible by three and by five")
                 .containsExactly(4, 7, 8, 9, 13, 14, 19);
+    }
+
+    @Test
+    @DisplayName("Filter out lines between [```java] and [```].")
+    void extract_all_java_code_snippets_from_markdown_document() {
+        var markdown = """
+                # Hello, World!
+                The following code snippet is written in Java:
+                ```java
+                System.out.println("Hello, World!");
+                ```
+                The following code snippet is written in Kotlin:
+                ```kotlin
+                println("Hello, World!")
+                ```
+                """;
+
+        Predicate<String> fizz = "```java"::equals;
+        Predicate<String> buzz = "```"::equals;
+
+        // TODO: Define the predicate
+        Predicate<String> fizzBuzz = i -> false;
+
+        assertThat(markdown.lines().filter(fizzBuzz))
+                .as("Java code snippets")
+                .containsExactly("""
+                        System.out.println("Hello, World!");
+                        """);
     }
 }
