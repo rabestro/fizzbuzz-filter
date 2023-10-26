@@ -1,5 +1,6 @@
 package com.epam.fizzbuzz;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
@@ -39,5 +40,46 @@ class PredicateTest {
 
     Predicate<String> isNotExit() {
         return not(Set.of("exit", "quit")::contains);
+    }
+
+    @Test
+    void the_length_of_the_sequence() {
+        var input = "1 7 9 0 5";
+
+        var count = new Scanner(input)
+                .tokens()
+                .takeWhile(not("0"::equals))
+                .count();
+
+        assertThat(count)
+                .as("The length of the sequence")
+                .isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("Filter out lines between [```java] and [```].")
+    void extract_all_java_code_snippets_from_markdown_document() {
+        var markdown = """
+                # Hello, World!
+                The following code snippet is written in Java:
+                ```java
+                System.out.println("Hello, World!");
+                ```
+                The following code snippet is written in Kotlin:
+                ```kotlin
+                println("Hello, World!")
+                ```
+                """;
+
+        Predicate<String> fizz = "```java"::equals;
+        Predicate<String> buzz = "```"::equals;
+
+        // TODO: Define the predicate
+        Predicate<String> fizzBuzz = s -> false;
+
+        assertThat(markdown.lines().filter(fizzBuzz))
+                .as("Java code snippets")
+                .containsExactly("""
+                        System.out.println("Hello, World!");""");
     }
 }
