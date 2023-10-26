@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Scanner;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import static java.util.function.Predicate.not;
 import static java.util.stream.IntStream.rangeClosed;
@@ -18,7 +17,7 @@ class FizzBuzzFilterExerciseTest {
 
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by three and five.")
+    @DisplayName("Task 1: Filter out numbers divisible by 3 and 5.")
     void numbers_divisible_by_three_and_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -30,7 +29,7 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by three or five.")
+    @DisplayName("Task 2: Filter out numbers divisible by 3 or 5")
     void numbers_divisible_by_three_or_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -42,7 +41,7 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are not divisible by three or five.")
+    @DisplayName("Task 3: Filter out numbers not divisible by 3 and 5")
     void task3_numbers_not_divisible_by_three_or_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -54,7 +53,7 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by either three or five.")
+    @DisplayName("Task 4: Filter out numbers that are divisible by either three or five.")
     void task4_numbers_divisible_by_either_three_or_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -66,7 +65,7 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers down to a number divisible by three and five.")
+    @DisplayName("Task 5: Filter out numbers down to a number divisible by 3 and 5")
     void task5_filtering_numbers_down_to_a_number_divisible_by_three_and_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -79,7 +78,7 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers out to a number divisible by three and five.")
+    @DisplayName("Task 6: Filter out numbers out to a number divisible by 3 and 5.")
     void task5_filtering_numbers_out_to_a_number_divisible_by_three_and_five() {
         var numbers = rangeClosed(1, 20);
 
@@ -91,19 +90,6 @@ class FizzBuzzFilterExerciseTest {
                 .containsExactly(15, 16, 17, 18, 19, 20);
     }
 
-    @Test
-    void the_length_of_the_sequence() {
-        var input = "1 7 9 0 5";
-
-        var count = new Scanner(input)
-                .tokens()
-                .takeWhile(not("0"::equals))
-                .count();
-
-        assertThat(count)
-                .as("The length of the sequence")
-                .isEqualTo(3);
-    }
 
     @Test
     @DisplayName("Filter out numbers between numbers divisible by three and by five.")
@@ -129,8 +115,16 @@ class FizzBuzzFilterExerciseTest {
                 .containsExactly(5, 6, 10, 11, 12, 15, 20);
     }
 
+
+    /**
+     * Returns a new IntPredicate that represents a flip-flop sequence.
+     * The flip-flop sequence determines whether to include a value based on the specified predicates.
+     *
+     * @param fizz the IntPredicate for the start condition
+     * @param buzz the IntPredicate for the end condition
+     * @return a new IntPredicate representing the flip-flop sequence
+     */
     IntPredicate flipFlop(IntPredicate fizz, IntPredicate buzz) {
-        // TODO: Define the predicate
         return new IntPredicate() {
             boolean state;
 
@@ -141,6 +135,21 @@ class FizzBuzzFilterExerciseTest {
                 return result;
             };
         };
+    }
+
+
+    @Test
+    void the_length_of_the_sequence() {
+        var input = "1 7 9 0 5";
+
+        var count = new Scanner(input)
+                .tokens()
+                .takeWhile(not("0"::equals))
+                .count();
+
+        assertThat(count)
+                .as("The length of the sequence")
+                .isEqualTo(3);
     }
 
     @Test
