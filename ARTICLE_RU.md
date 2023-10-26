@@ -136,7 +136,8 @@ void extract_all_java_code_snippets_from_markdown_document() {
     assertThat(markdown.lines().filter(fizzBuzz))
             .as("Java code snippets")
             .containsExactly("""
-                    System.out.println("Hello, World!");
-                    """);
+                    System.out.println("Hello, World!");""");
 }
 ```
+Надеюсь, что последняя задачка более интересная чем предыдущие. 
+Напишите в комментариях, насколько быстро вам удалось её решить.

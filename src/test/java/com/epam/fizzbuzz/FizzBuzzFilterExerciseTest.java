@@ -3,10 +3,12 @@ package com.epam.fizzbuzz;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Scanner;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
+import static java.util.function.Predicate.not;
+import static java.util.stream.IntStream.rangeClosed;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FizzBuzzFilterExerciseTest {
@@ -15,11 +17,11 @@ class FizzBuzzFilterExerciseTest {
 
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by three and five.")
+    @DisplayName("Task 1: Filter out numbers divisible by 3 and 5.")
     void numbers_divisible_by_three_and_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
+        var numbers = rangeClosed(1, 20);
 
-        IntPredicate fizzBuzz = fizz.and(buzz);
+        var fizzBuzz = fizz.and(buzz);
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers divisible by three and five")
@@ -27,11 +29,11 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by three or five.")
+    @DisplayName("Task 2: Filter out numbers divisible by 3 or 5")
     void numbers_divisible_by_three_or_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
+        var numbers = rangeClosed(1, 20);
 
-        IntPredicate fizzBuzz = fizz.or(buzz);
+        var fizzBuzz = fizz.or(buzz);
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers divisible by three or five")
@@ -39,11 +41,11 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are not divisible by three or five.")
-    void numbers_not_divisible_by_three_or_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
+    @DisplayName("Task 3: Filter out numbers not divisible by 3 and 5")
+    void task3_numbers_not_divisible_by_three_or_five() {
+        var numbers = rangeClosed(1, 20);
 
-        IntPredicate fizzBuzz = fizz.or(buzz).negate();
+        var fizzBuzz = fizz.or(buzz).negate();
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers not divisible by three or five")
@@ -51,9 +53,9 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
-    @DisplayName("Filter out numbers that are divisible by either three or five.")
-    void numbers_divisible_by_either_three_or_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
+    @DisplayName("Task 4: Filter out numbers that are divisible by either three or five.")
+    void task4_numbers_divisible_by_either_three_or_five() {
+        var numbers = rangeClosed(1, 20);
 
         IntPredicate fizzBuzz = i -> fizz.test(i) ^ buzz.test(i);
 
@@ -63,16 +65,91 @@ class FizzBuzzFilterExerciseTest {
     }
 
     @Test
+    @DisplayName("Task 5: Filter out numbers down to a number divisible by 3 and 5")
+    void task5_filtering_numbers_down_to_a_number_divisible_by_three_and_five() {
+        var numbers = rangeClosed(1, 20);
+
+        var fizzBuzz = fizz.and(buzz);
+        var result = numbers.takeWhile(fizzBuzz.negate());
+
+        assertThat(result)
+                .as("Numbers down to a number divisible by three and five")
+                .containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+    }
+
+    @Test
+    @DisplayName("Task 6: Filter out numbers out to a number divisible by 3 and 5.")
+    void task5_filtering_numbers_out_to_a_number_divisible_by_three_and_five() {
+        var numbers = rangeClosed(1, 20);
+
+        var fizzBuzz = fizz.and(buzz);
+        var result = numbers.dropWhile(fizzBuzz.negate());
+
+        assertThat(result)
+                .as("Numbers after a number divisible by three and five")
+                .containsExactly(15, 16, 17, 18, 19, 20);
+    }
+
+
+    @Test
     @DisplayName("Filter out numbers between numbers divisible by three and by five.")
     void numbers_between_a_numbers_divisible_by_three_and_by_five() {
-        var numbers = IntStream.rangeClosed(1, 20);
+        var numbers = rangeClosed(1, 20);
 
-        // TODO: Define the predicate
-        IntPredicate fizzBuzz = i -> false;
+        IntPredicate fizzBuzz = flipFlop(fizz, buzz);
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers between numbers divisible by three and by five")
-                .containsExactly(4, 7, 8, 9, 13, 14, 19);
+                .containsExactly(3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 18, 19, 20);
+    }
+
+    @Test
+    @DisplayName("Filter out numbers between numbers divisible by five and by three.")
+    void numbers_between_a_numbers_divisible_by_five_and_three() {
+        var numbers = rangeClosed(1, 20);
+
+        IntPredicate buzzFizz = flipFlop(buzz, fizz);
+
+        assertThat(numbers.filter(buzzFizz))
+                .as("Numbers between numbers divisible by five and by three")
+                .containsExactly(5, 6, 10, 11, 12, 15, 20);
+    }
+
+
+    /**
+     * Returns a new IntPredicate that represents a flip-flop sequence.
+     * The flip-flop sequence determines whether to include a value based on the specified predicates.
+     *
+     * @param fizz the IntPredicate for the start condition
+     * @param buzz the IntPredicate for the end condition
+     * @return a new IntPredicate representing the flip-flop sequence
+     */
+    IntPredicate flipFlop(IntPredicate fizz, IntPredicate buzz) {
+        return new IntPredicate() {
+            boolean state;
+
+            @Override
+            public boolean test(int value){
+                var result = state || fizz.test(value);
+                state = result && !buzz.test(value);
+                return result;
+            };
+        };
+    }
+
+
+    @Test
+    void the_length_of_the_sequence() {
+        var input = "1 7 9 0 5";
+
+        var count = new Scanner(input)
+                .tokens()
+                .takeWhile(not("0"::equals))
+                .count();
+
+        assertThat(count)
+                .as("The length of the sequence")
+                .isEqualTo(3);
     }
 
     @Test
@@ -94,12 +171,11 @@ class FizzBuzzFilterExerciseTest {
         Predicate<String> buzz = "```"::equals;
 
         // TODO: Define the predicate
-        Predicate<String> fizzBuzz = i -> false;
+        Predicate<String> fizzBuzz = s -> false;
 
         assertThat(markdown.lines().filter(fizzBuzz))
                 .as("Java code snippets")
                 .containsExactly("""
-                        System.out.println("Hello, World!");
-                        """);
+                        System.out.println("Hello, World!");""");
     }
 }
