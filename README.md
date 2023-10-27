@@ -125,17 +125,17 @@ IntPredicate flipFlop(IntPredicate fizz, IntPredicate buzz) {
 To define the flip-flop predicate, we call the method as follows.
 
 ```java
-IntPredicate fizzBuzz = flipFlop(fizz, buzz);
+var fizzBuzz = flipFlop(fizz, buzz);
 
- assertThat(numbers.filter(fizzBuzz))
-		 .as("Numbers between numbers divisible by three and by five")
-     .containsExactly(3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 18, 19, 20);
+assertThat(numbers.filter(fizzBuzz))
+        .as("Numbers between numbers divisible by three and by five")
+        .containsExactly(3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 18, 19, 20);
 ```
 
 To demonstrate the operation of this predicate, I enclosed the number sequences in square brackets.
 
 ```
-1, 2, **[3, 4, 5]**, **[6, 7, 8, 9, 10]**, 11, **[12, 13, 14, 15]**, 16, 17, **[18, 19, 20]**
+1, 2, [3, 4, 5], [6, 7, 8, 9, 10], 11, [12, 13, 14, 15], 16, 17, [18, 19, 20]
 ```
 
 We get a completely different sequence if we swap the predicates `fizz` and `buzz`.
@@ -151,7 +151,7 @@ assertThat(numbers.filter(buzzFizz))
 Please note that in this case, the number 15 begins and ends the sequence, and the number 20 starts the series, but we don’t have its completion. At the same time, we ignore the number 3, which should end the sequence since our sequence has not yet begun.
 
 ```
-1, 2, 3, 4, **[5, 6]**, 7, 8, 9, **[10, 11, 12]**, 13, 14, **[15]**, 16, 17, 18, 19, **[20**
+1, 2, 3, 4, [5, 6], 7, 8, 9, [10, 11, 12], 13, 14, [15], 16, 17, 18, 19, [20
 ```
 
 I hope you're willing to give the final problem a shot.
