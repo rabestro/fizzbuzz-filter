@@ -8,6 +8,7 @@ import java.util.function.IntPredicate;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("FizzBuzz and the art of filtering")
 class FizzBuzzFilterExerciseTest {
     private final IntPredicate fizz = i -> i % 3 == 0;
     private final IntPredicate buzz = i -> i % 5 == 0;
@@ -93,7 +94,7 @@ class FizzBuzzFilterExerciseTest {
     void numbers_between_a_numbers_divisible_by_three_and_by_five() {
         var numbers = rangeClosed(1, 20);
 
-        IntPredicate fizzBuzz = flipFlop(fizz, buzz);
+        var fizzBuzz = flipFlop(fizz, buzz);
 
         assertThat(numbers.filter(fizzBuzz))
                 .as("Numbers between numbers divisible by three and by five")
@@ -105,7 +106,7 @@ class FizzBuzzFilterExerciseTest {
     void numbers_between_a_numbers_divisible_by_five_and_three() {
         var numbers = rangeClosed(1, 20);
 
-        IntPredicate buzzFizz = flipFlop(buzz, fizz);
+        var buzzFizz = flipFlop(buzz, fizz);
 
         assertThat(numbers.filter(buzzFizz))
                 .as("Numbers between numbers divisible by five and by three")
@@ -126,11 +127,11 @@ class FizzBuzzFilterExerciseTest {
             boolean state;
 
             @Override
-            public boolean test(int value){
+            public boolean test(int value) {
                 var result = state || fizz.test(value);
                 state = result && !buzz.test(value);
                 return result;
-            };
+            }
         };
     }
 }
