@@ -8,9 +8,33 @@
     <artifactId>fizzbuzz</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>FizzBuzz and the art of filtering</name>
+    <description>
+        Stream API-based Tasks Inspired by the Classic Problem
+    </description>
+    <url>https://jc.id.lv/posts/fizzbuzz-and-the-art-of-filtering/</url>
+    <inceptionYear>2023</inceptionYear>
+
+    <organization>
+        <name>EPAM Systems</name>
+        <url>https://www.epam.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>rabestro</id>
+            <name>Jegors Čemisovs</name>
+            <url>https://github.com/rabestro</url>
+            <roles>
+                <role>author</role>
+            </roles>
+            <timezone>Europe/Riga</timezone>
+        </developer>
+    </developers>
+
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <assertj.version>3.24.2</assertj.version>
@@ -49,4 +73,10 @@
             </plugin>
         </plugins>
     </build>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/rabestro/fizzbuzz-filter/issues</url>
+    </issueManagement>
+
 </project>
